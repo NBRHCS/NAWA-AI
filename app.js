@@ -1,414 +1,585 @@
-:root {
-  --ink: #07192f;
-  --ink-soft: #163657;
-  --surface: #ffffff;
-  --surface-blue: #eefaff;
-  --cyan: #5ed7f8;
-  --cyan-strong: #12a7df;
-  --line: #cde9f5;
-  --muted: #5f7488;
-  --shadow: 0 24px 70px rgba(7, 25, 47, 0.14);
-}
+const form = document.querySelector("#generatorForm");
+const fileInput = document.querySelector("#fileInput");
+const fileStatus = document.querySelector("#fileStatus");
+const dropZone = document.querySelector("#dropZone");
+const lectureText = document.querySelector("#lectureText");
+const resultTitle = document.querySelector("#resultTitle");
+const resultOutput = document.querySelector("#resultOutput");
+const copyButton = document.querySelector("#copyButton");
+const downloadButton = document.querySelector("#downloadButton");
+const clearButton = document.querySelector("#clearButton");
+const generateButton = document.querySelector("#generateButton");
 
-* {
-  box-sizing: border-box;
-}
+let currentResult = "";
+let selectedFileName = "";
+let lastPdfReadFailed = false;
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  background:
-    linear-gradient(135deg, rgba(238, 250, 255, 0.92), rgba(255, 255, 255, 0.96)),
-    radial-gradient(circle at 15% 18%, rgba(94, 215, 248, 0.24), transparent 28%),
-    #f8fcff;
-  color: var(--ink);
-  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
-}
+const MIN_WORDS = 35;
 
-button,
-textarea,
-input {
-  font: inherit;
-}
+const typeLabels = {
+  summary: "ملخص المحاضرة",
+  questions: "أسئلة متوقعة",
+  flashcards: "فلاش كارد",
+  plan: "خطة مذاكرة بسيطة",
+};
 
-.app-shell {
-  min-height: 100vh;
-  padding: 28px;
-}
+const arabicStopWords = new Set([
+  "هذا",
+  "هذه",
+  "ذلك",
+  "تلك",
+  "الذي",
+  "التي",
+  "الذين",
+  "على",
+  "إلى",
+  "الى",
+  "في",
+  "من",
+  "عن",
+  "مع",
+  "كان",
+  "كانت",
+  "يكون",
+  "تكون",
+  "كما",
+  "لكن",
+  "لذلك",
+  "حيث",
+  "عند",
+  "بعد",
+  "قبل",
+  "بين",
+  "أو",
+  "ثم",
+  "وقد",
+  "لدى",
+  "ضمن",
+  "كل",
+  "غير",
+]);
 
-.workspace {
-  width: min(1180px, 100%);
-  margin: 0 auto;
-}
+const englishStopWords = new Set([
+  "the",
+  "and",
+  "for",
+  "with",
+  "that",
+  "this",
+  "from",
+  "into",
+  "about",
+  "when",
+  "where",
+  "which",
+  "while",
+  "because",
+  "there",
+  "their",
+  "these",
+  "those",
+  "have",
+  "has",
+  "are",
+  "was",
+  "were",
+  "can",
+  "will",
+  "should",
+]);
 
-.brand-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 42px;
-}
-
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  color: var(--ink);
-  text-decoration: none;
-}
-
-.brand-mark {
-  display: block;
-  flex: 0 0 auto;
-  width: 74px;
-  height: 74px;
-  border-radius: 50%;
-  box-shadow: 0 14px 34px rgba(7, 25, 47, 0.18);
-}
-
-.brand strong,
-.brand small {
-  display: block;
-  line-height: 1.15;
-}
-
-.brand small,
-.tagline,
-.intro p,
-.privacy-note,
-.upload-zone p {
-  color: var(--muted);
-}
-
-.tagline {
-  margin: 0;
-  font-size: 0.95rem;
-}
-
-.intro {
-  width: min(760px, 100%);
-  margin-bottom: 28px;
-}
-
-.eyebrow {
-  margin: 0 0 8px;
-  color: var(--cyan-strong);
-  font-size: 0.78rem;
-  font-weight: 800;
-}
-
-h1,
-h2 {
-  margin: 0;
-  letter-spacing: 0;
-}
-
-h1 {
-  max-width: 780px;
-  font-size: clamp(2rem, 5vw, 4.6rem);
-  line-height: 1.08;
-}
-
-.intro p:not(.eyebrow) {
-  margin: 18px 0 0;
-  max-width: 680px;
-  font-size: 1.08rem;
-  line-height: 1.9;
-}
-
-.tool-grid {
-  display: grid;
-  grid-template-columns: minmax(320px, 0.9fr) minmax(360px, 1.1fr);
-  gap: 20px;
-  align-items: stretch;
-}
-
-.generator-panel,
-.result-panel {
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: var(--shadow);
-}
-
-.generator-panel {
-  padding: 18px;
-}
-
-.upload-zone {
-  position: relative;
-  display: grid;
-  grid-template-columns: 54px 1fr;
-  gap: 14px;
-  align-items: center;
-  min-height: 116px;
-  padding: 18px;
-  border: 1px dashed #83cfea;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #f6fdff, #eaf9ff);
-}
-
-.upload-zone.is-dragging {
-  border-color: var(--cyan-strong);
-  background: #e4f8ff;
-}
-
-.upload-zone input {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  cursor: pointer;
-}
-
-.upload-zone label {
-  display: block;
-  margin-bottom: 4px;
-  font-weight: 800;
-}
-
-.upload-zone p {
-  margin: 0;
-  line-height: 1.6;
-}
-
-.upload-icon {
-  display: grid;
-  place-items: center;
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  background: var(--ink);
-}
-
-.upload-icon span {
-  width: 22px;
-  height: 28px;
-  border: 2px solid var(--cyan);
-  border-radius: 4px;
-  position: relative;
-}
-
-.upload-icon span::before,
-.upload-icon span::after {
-  content: "";
-  position: absolute;
-  background: var(--cyan);
-}
-
-.upload-icon span::before {
-  width: 10px;
-  height: 2px;
-  top: 8px;
-  right: 5px;
-}
-
-.upload-icon span::after {
-  width: 12px;
-  height: 2px;
-  top: 15px;
-  right: 4px;
-}
-
-.field-label {
-  display: block;
-  margin: 18px 0 8px;
-  font-weight: 800;
-}
-
-textarea {
-  width: 100%;
-  resize: vertical;
-  min-height: 170px;
-  padding: 14px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  color: var(--ink);
-  background: #fbfeff;
-  line-height: 1.7;
-}
-
-textarea:focus,
-button:focus-visible {
-  outline: 3px solid rgba(94, 215, 248, 0.42);
-  outline-offset: 2px;
-}
-
-.output-options {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
-  margin: 18px 0 0;
-  padding: 0;
-  border: 0;
-}
-
-.output-options legend {
-  margin-bottom: 10px;
-  font-weight: 800;
-}
-
-.output-options label {
-  min-height: 42px;
-}
-
-.output-options input {
-  position: absolute;
-  opacity: 0;
-}
-
-.output-options span {
-  display: grid;
-  place-items: center;
-  min-height: 42px;
-  padding: 8px 10px;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: #f9fdff;
-  color: var(--ink-soft);
-  cursor: pointer;
-  font-weight: 700;
-  text-align: center;
-}
-
-.output-options input:checked + span {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: #fff;
-}
-
-.actions,
-.result-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.actions {
-  margin-top: 18px;
-}
-
-button {
-  min-height: 44px;
-  border: 0;
-  border-radius: 8px;
-  padding: 0 18px;
-  cursor: pointer;
-  font-weight: 800;
-}
-
-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.48;
-}
-
-.primary-button {
-  flex: 1;
-  background: var(--ink);
-  color: #fff;
-}
-
-.ghost-button,
-.result-actions button {
-  border: 1px solid var(--line);
-  background: #f7fcff;
-  color: var(--ink);
-}
-
-.privacy-note {
-  margin: 16px 0 0;
-  font-size: 0.88rem;
-  line-height: 1.7;
-}
-
-.result-panel {
-  display: flex;
-  flex-direction: column;
-  min-height: 520px;
-  overflow: hidden;
-}
-
-.result-header {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  align-items: center;
-  padding: 18px;
-  border-bottom: 1px solid var(--line);
-  background: var(--surface-blue);
-}
-
-.result-header h2 {
-  font-size: 1.18rem;
-}
-
-pre {
-  flex: 1;
-  margin: 0;
-  padding: 20px;
-  overflow: auto;
-  white-space: pre-wrap;
-  word-break: break-word;
-  color: var(--ink-soft);
-  line-height: 1.9;
-  font-family: inherit;
-  font-size: 1rem;
-}
-
-pre.is-error {
-  color: #8a1f1f;
-  background: #fff8f8;
-}
-
-@media (max-width: 900px) {
-  .app-shell {
-    padding: 18px;
+fileInput.addEventListener("change", async () => {
+  const file = fileInput.files?.[0];
+  if (!file) {
+    lastPdfReadFailed = false;
+    fileStatus.textContent = "لم يتم اختيار ملف. اختر ملف PDF للمحاضرة.";
+    return;
   }
 
-  .brand-bar,
-  .result-header {
-    align-items: flex-start;
-    flex-direction: column;
+  selectedFileName = file.name;
+  lastPdfReadFailed = false;
+  fileStatus.textContent = `تم اختيار: ${file.name}`;
+
+  if (!isPdfFile(file)) {
+    selectedFileName = "";
+    lectureText.value = "";
+    lastPdfReadFailed = true;
+    fileStatus.textContent = "الملف المختار ليس PDF. الرجاء رفع ملف محاضرة بصيغة PDF فقط.";
+    return;
   }
 
-  .tool-grid {
-    grid-template-columns: 1fr;
+  fileStatus.textContent = "جاري قراءة ملف PDF...";
+
+  try {
+    const pdfText = await tryReadPdf(file);
+    if (pdfText) {
+      lectureText.value = pdfText;
+      fileStatus.textContent = `تمت قراءة PDF وتنظيف النص: ${file.name}`;
+    } else {
+      lastPdfReadFailed = true;
+      lectureText.value = "";
+      fileStatus.textContent = "تم فتح ملف PDF، لكن لم أتمكن من استخراج نص واضح منه. قد يكون الملف صوراً ممسوحة ضوئياً.";
+    }
+  } catch {
+    lastPdfReadFailed = true;
+    lectureText.value = "";
+    fileStatus.textContent = "تعذر قراءة ملف PDF. تأكد أن الملف غير تالف ثم جرّب مرة أخرى.";
+  }
+});
+
+["dragenter", "dragover"].forEach((eventName) => {
+  dropZone.addEventListener(eventName, (event) => {
+    event.preventDefault();
+    dropZone.classList.add("is-dragging");
+  });
+});
+
+["dragleave", "drop"].forEach((eventName) => {
+  dropZone.addEventListener(eventName, (event) => {
+    event.preventDefault();
+    dropZone.classList.remove("is-dragging");
+  });
+});
+
+dropZone.addEventListener("drop", (event) => {
+  const file = event.dataTransfer.files?.[0];
+  if (!file) return;
+  fileInput.files = event.dataTransfer.files;
+  fileInput.dispatchEvent(new Event("change"));
+});
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const outputType = new FormData(form).get("outputType");
+  const cleanedText = cleanLectureText(lectureText.value);
+  const validationError = validateLectureText(cleanedText);
+
+  if (validationError) {
+    showResult("تنبيه", validationError, true);
+    return;
   }
 
-  .output-options {
-    grid-template-columns: repeat(2, 1fr);
+  setLoading(true);
+  resultTitle.textContent = typeLabels[outputType];
+  resultOutput.textContent = "جاري التوليد...";
+
+  await waitForUi();
+
+  try {
+    currentResult = generateResult(outputType, cleanedText);
+    lectureText.value = cleanedText;
+    resultOutput.textContent = currentResult;
+    copyButton.disabled = false;
+    downloadButton.disabled = false;
+  } catch {
+    showResult("حدث خطأ", "حدثت مشكلة أثناء توليد النتيجة. حاول تقليل النص أو إعادة المحاولة.", true);
+  } finally {
+    setLoading(false);
   }
+});
+
+copyButton.addEventListener("click", async () => {
+  if (!currentResult) return;
+  await navigator.clipboard.writeText(currentResult);
+  copyButton.textContent = "تم النسخ";
+  window.setTimeout(() => {
+    copyButton.textContent = "نسخ";
+  }, 1400);
+});
+
+downloadButton.addEventListener("click", () => {
+  if (!currentResult) return;
+  const blob = new Blob([currentResult], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "nawa-ai-result.txt";
+  link.click();
+  URL.revokeObjectURL(url);
+});
+
+clearButton.addEventListener("click", () => {
+  form.reset();
+  currentResult = "";
+  selectedFileName = "";
+  lastPdfReadFailed = false;
+  fileStatus.textContent = "أو اسحب الملف هنا. يمكن أيضاً استخدام نص المحاضرة بالأسفل.";
+  resultTitle.textContent = "جاهز للتوليد";
+  resultOutput.textContent = "ارفع ملفاً أو ألصق نص المحاضرة، اختر نوع المخرجات، ثم اضغط توليد.";
+  copyButton.disabled = true;
+  downloadButton.disabled = true;
+  setLoading(false);
+});
+
+async function tryReadPdf(file) {
+  const pdfjsLib = window.pdfjsLib;
+
+  if (!pdfjsLib) {
+    throw new Error("PDF.js is not loaded");
+  }
+
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+  const data = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data }).promise;
+  const pages = [];
+
+  for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber += 1) {
+    const page = await pdf.getPage(pageNumber);
+    const content = await page.getTextContent();
+    const pageText = content.items
+      .map((item) => item.str)
+      .join(" ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    if (pageText) pages.push(pageText);
+  }
+
+  return cleanLectureText(pages.join("\n\n"));
 }
 
-@media (max-width: 520px) {
-  .app-shell {
-    padding: 12px;
+function isPdfFile(file) {
+  return file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf");
+}
+
+function cleanLectureText(text) {
+  if (!text) return "";
+
+  const normalized = text
+    .replace(/\r/g, "\n")
+    .replace(/\u00a0/g, " ")
+    .replace(/[ \t]+/g, " ")
+    .replace(/-\s*\n\s*/g, "")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+
+  const rawLines = normalized
+    .split("\n")
+    .map((line) => line.replace(/\s+/g, " ").trim())
+    .filter(Boolean);
+
+  const counts = rawLines.reduce((map, line) => {
+    const key = normalizeLineKey(line);
+    map.set(key, (map.get(key) || 0) + 1);
+    return map;
+  }, new Map());
+
+  const cleanedLines = rawLines.filter((line) => {
+    const key = normalizeLineKey(line);
+    if (isCopyrightLine(line)) return false;
+    if (isPageMarker(line)) return false;
+    if (counts.get(key) >= 3 && line.length < 90) return false;
+    return true;
+  });
+
+  return rebuildParagraphs(cleanedLines);
+}
+
+function normalizeLineKey(line) {
+  return line
+    .toLowerCase()
+    .replace(/\d+/g, "#")
+    .replace(/[^\p{L}\p{N}# ]/gu, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function isCopyrightLine(line) {
+  return /copyright|all rights reserved|©|حقوق النشر|جميع الحقوق محفوظة|confidential|proprietary/i.test(line);
+}
+
+function isPageMarker(line) {
+  return /^(page|slide)\s*\d+(\s*of\s*\d+)?$/i.test(line) || /^(صفحة|شريحة)\s*\d+$/i.test(line) || /^\d+\s*\/\s*\d+$/.test(line);
+}
+
+function rebuildParagraphs(lines) {
+  const paragraphs = [];
+  let current = "";
+
+  lines.forEach((line) => {
+    const looksLikeHeading = line.length <= 80 && !/[.!؟?]$/.test(line) && countWords(line) <= 9;
+    const endsSentence = /[.!؟?]$/.test(current);
+
+    if (!current) {
+      current = line;
+    } else if (looksLikeHeading || endsSentence) {
+      paragraphs.push(current);
+      current = line;
+    } else {
+      current = `${current} ${line}`;
+    }
+  });
+
+  if (current) paragraphs.push(current);
+
+  return paragraphs
+    .map((paragraph) => paragraph.replace(/\s+/g, " ").trim())
+    .filter(Boolean)
+    .join("\n\n");
+}
+
+function validateLectureText(text) {
+  if (!text) {
+    if (lastPdfReadFailed) {
+      return "لم أتمكن من قراءة ملف PDF. جرّب ملفاً أوضح، أو ألصق نص المحاضرة في مربع النص.";
+    }
+    return "ارفع ملف PDF أو ألصق نص المحاضرة أولاً، ثم اختر نوع المخرجات.";
   }
 
-  .brand-bar {
-    margin-bottom: 28px;
+  if (countWords(text) < MIN_WORDS) {
+    return "النص قصير جداً لتوليد مراجعة مفيدة. أضف محتوى أكثر من المحاضرة ثم جرّب مرة ثانية.";
   }
 
-  h1 {
-    font-size: 2rem;
+  return "";
+}
+
+function generateResult(type, text) {
+  const source = cleanLectureText(text);
+  const sentences = splitSentences(source);
+  const keywords = extractKeywords(source, 18);
+  const concepts = buildConcepts(source, sentences, keywords);
+
+  if (type === "questions") return buildQuestions(sentences, concepts);
+  if (type === "flashcards") return buildFlashcards(sentences, concepts);
+  if (type === "plan") return buildStudyPlan(sentences, concepts);
+  return buildSummary(sentences, concepts);
+}
+
+function splitSentences(text) {
+  const compactText = text.replace(/\n+/g, " ");
+  const sentences = compactText
+    .split(/(?<=[.!؟?])\s+|[؛;]\s+/)
+    .map((sentence) => sentence.trim())
+    .filter((sentence) => countWords(sentence) >= 5);
+
+  if (sentences.length >= 8) return sentences.slice(0, 40);
+
+  const chunks = compactText.match(/.{80,220}(\s|$)/g) || [compactText];
+  return chunks.map((chunk) => chunk.trim()).filter((chunk) => countWords(chunk) >= 5).slice(0, 24);
+}
+
+function extractKeywords(text, limit = 12) {
+  const words = text
+    .replace(/[^\p{L}\p{N}\s-]/gu, " ")
+    .split(/\s+/)
+    .map((word) => word.trim())
+    .filter((word) => isUsefulWord(word));
+
+  const counts = new Map();
+  words.forEach((word) => {
+    const key = word.toLowerCase();
+    counts.set(key, { word, count: (counts.get(key)?.count || 0) + 1 });
+  });
+
+  return [...counts.values()]
+    .sort((a, b) => b.count - a.count || b.word.length - a.word.length)
+    .slice(0, limit)
+    .map((item) => item.word);
+}
+
+function buildConcepts(text, sentences, keywords) {
+  const concepts = keywords.map((term) => {
+    const sourceSentence =
+      sentences.find((sentence) => sentence.toLowerCase().includes(term.toLowerCase())) || sentences[0] || text;
+
+    return {
+      term,
+      definition: makeSimpleDefinition(term, sourceSentence),
+      evidence: sourceSentence,
+    };
+  });
+
+  if (concepts.length >= 12) return concepts;
+
+  sentences.slice(0, 12).forEach((sentence, index) => {
+    concepts.push({
+      term: `فكرة ${index + 1}`,
+      definition: shorten(sentence, 150),
+      evidence: sentence,
+    });
+  });
+
+  return concepts.slice(0, 18);
+}
+
+function buildSummary(sentences, concepts) {
+  const shortSummary = sentences.slice(0, 3).map((sentence) => `- ${shorten(sentence, 180)}`).join("\n");
+  const importantPoints = sentences.slice(0, 8).map((sentence, index) => `${index + 1}. ${shorten(sentence, 190)}`).join("\n");
+  const keyTerms = concepts
+    .slice(0, 8)
+    .map((concept, index) => `${index + 1}. ${concept.term}: ${concept.definition}`)
+    .join("\n");
+
+  return `ملخص قصير:
+${shortSummary}
+
+نقاط مهمة:
+${importantPoints}
+
+مصطلحات أساسية وتعريفات مبسطة:
+${keyTerms}`;
+}
+
+function buildQuestions(sentences, concepts) {
+  const mcq = Array.from({ length: 5 }, (_, index) => buildMultipleChoiceQuestion(index, concepts, sentences));
+  const trueFalse = Array.from({ length: 5 }, (_, index) => buildTrueFalseQuestion(index, concepts, sentences));
+  const essays = Array.from({ length: 3 }, (_, index) => buildEssayQuestion(index, concepts, sentences));
+
+  return `أسئلة اختيار من متعدد:
+${mcq.join("\n\n")}
+
+أسئلة صح أو خطأ:
+${trueFalse.join("\n\n")}
+
+أسئلة مقالية قصيرة:
+${essays.join("\n\n")}`;
+}
+
+function buildMultipleChoiceQuestion(index, concepts, sentences) {
+  const concept = concepts[index % concepts.length];
+  const options = uniqueList([
+    concept.term,
+    concepts[(index + 1) % concepts.length]?.term,
+    concepts[(index + 2) % concepts.length]?.term,
+    concepts[(index + 3) % concepts.length]?.term,
+  ]).slice(0, 4);
+
+  while (options.length < 4) options.push(shorten(sentences[(index + options.length) % sentences.length], 42));
+
+  return `${index + 1}. أي خيار يرتبط أكثر بالعبارة التالية؟
+"${shorten(concept.evidence, 150)}"
+أ) ${options[0]}
+ب) ${options[1]}
+ج) ${options[2]}
+د) ${options[3]}
+الإجابة الصحيحة: أ) ${options[0]}`;
+}
+
+function buildTrueFalseQuestion(index, concepts, sentences) {
+  const concept = concepts[index % concepts.length];
+
+  if (index % 2 === 0) {
+    return `${index + 1}. العبارة: "${shorten(concept.evidence, 170)}"
+الإجابة الصحيحة: صح`;
   }
 
-  .upload-zone {
-    grid-template-columns: 1fr;
+  return `${index + 1}. العبارة: المحاضرة لا تتناول فكرة "${concept.term}".
+الإجابة الصحيحة: خطأ`;
+}
+
+function buildEssayQuestion(index, concepts, sentences) {
+  const concept = concepts[index % concepts.length];
+  const related = sentences[(index + 2) % sentences.length] || concept.evidence;
+
+  return `${index + 1}. اشرح باختصار مفهوم "${concept.term}" اعتماداً على المحاضرة.
+إجابة مقترحة: ${concept.definition} ويمكن دعم الإجابة بهذه الفكرة: ${shorten(related, 150)}`;
+}
+
+function buildFlashcards(sentences, concepts) {
+  const cards = [];
+
+  concepts.slice(0, 10).forEach((concept, index) => {
+    cards.push(`بطاقة ${index + 1}
+الأمام: ما المقصود بـ "${concept.term}"؟
+الخلف: ${concept.definition}`);
+  });
+
+  let sentenceIndex = 0;
+  while (cards.length < 10) {
+    const sentence = sentences[sentenceIndex % sentences.length];
+    cards.push(`بطاقة ${cards.length + 1}
+الأمام: ما الفكرة الرئيسية في العبارة التالية؟ "${shorten(sentence, 120)}"
+الخلف: ${shorten(sentence, 170)}`);
+    sentenceIndex += 1;
   }
 
-  .output-options,
-  .actions,
-  .result-actions {
-    width: 100%;
-  }
+  return cards.join("\n\n");
+}
 
-  .actions,
-  .result-actions {
-    flex-direction: column;
-  }
+function buildStudyPlan(sentences, concepts) {
+  const chunks = chunkArray(sentences, 3);
+  const dayTopics = [0, 1, 2].map((index) => {
+    const daySentences = chunks[index] || sentences.slice(index * 2, index * 2 + 3);
+    const dayConcepts = concepts.slice(index * 4, index * 4 + 4).map((concept) => concept.term).join("، ");
 
-  .actions button,
-  .result-actions button {
-    width: 100%;
-  }
+    return {
+      study: daySentences.slice(0, 3).map((sentence) => shorten(sentence, 140)).join(" / "),
+      review: dayConcepts || concepts.slice(0, 3).map((concept) => concept.term).join("، "),
+      test: concepts[index]?.term || "الفكرة الأساسية",
+    };
+  });
+
+  return `خطة مذاكرة لمدة 3 أيام:
+
+اليوم الأول:
+ماذا تذاكر: ${dayTopics[0].study}
+ماذا تراجع: ${dayTopics[0].review}
+اختبار سريع: اكتب 3 أسئلة قصيرة عن "${dayTopics[0].test}" ثم أجب عنها بدون الرجوع للنص.
+
+اليوم الثاني:
+ماذا تذاكر: ${dayTopics[1].study}
+ماذا تراجع: ${dayTopics[1].review}
+اختبار سريع: اشرح "${dayTopics[1].test}" في 5 أسطر، ثم قارن إجابتك بمحتوى المحاضرة.
+
+اليوم الثالث:
+ماذا تذاكر: ${dayTopics[2].study}
+ماذا تراجع: ${dayTopics[2].review}
+اختبار سريع: حل أسئلة الاختيار والصح والخطأ، ثم راجع البطاقات التي أخطأت فيها.`;
+}
+
+function makeSimpleDefinition(term, sentence) {
+  const cleaned = shorten(sentence.replace(new RegExp(escapeRegExp(term), "ig"), term), 170);
+  return `يرتبط هذا المصطلح بالفكرة التالية في المحاضرة: ${cleaned}`;
+}
+
+function escapeRegExp(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function showResult(title, message, isError = false) {
+  currentResult = "";
+  resultTitle.textContent = title;
+  resultOutput.textContent = message;
+  resultOutput.classList.toggle("is-error", isError);
+  copyButton.disabled = true;
+  downloadButton.disabled = true;
+}
+
+function setLoading(isLoading) {
+  generateButton.disabled = isLoading;
+  generateButton.textContent = isLoading ? "جاري التوليد..." : "ابدأ الآن";
+  resultOutput.classList.remove("is-error");
+}
+
+function waitForUi() {
+  return new Promise((resolve) => window.setTimeout(resolve, 120));
+}
+
+function countWords(text) {
+  return (text.match(/[\p{L}\p{N}]+/gu) || []).length;
+}
+
+function isUsefulWord(word) {
+  if (!word || word.length < 4) return false;
+  const lower = word.toLowerCase();
+  if (arabicStopWords.has(lower) || englishStopWords.has(lower)) return false;
+  if (/^\d+$/.test(word)) return false;
+  return true;
+}
+
+function shorten(text, maxLength) {
+  const compact = text.replace(/\s+/g, " ").trim();
+  if (compact.length <= maxLength) return compact;
+  return `${compact.slice(0, maxLength).replace(/\s+\S*$/, "")}...`;
+}
+
+function uniqueList(items) {
+  return [...new Set(items.filter(Boolean))];
+}
+
+function chunkArray(items, chunkCount) {
+  const size = Math.ceil(items.length / chunkCount);
+  return Array.from({ length: chunkCount }, (_, index) => items.slice(index * size, index * size + size));
 }
