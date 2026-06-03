@@ -13,8 +13,8 @@
   </head>
   <body>
     <main class="app-shell">
-      <section class="workspace" aria-labelledby="page-title">
-        <header class="brand-bar">
+      <section class="dashboard-panel" aria-labelledby="page-title">
+        <aside class="sidebar" aria-label="التنقل الرئيسي">
           <a class="brand" href="#" aria-label="Nawa AI">
             <svg class="brand-mark" aria-hidden="true" focusable="false" width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
@@ -93,81 +93,103 @@
             </span>
           </a>
           <p class="tagline">من ملف طويل إلى مراجعة جاهزة.</p>
-        </header>
+          <nav class="sidebar-nav">
+            <a href="#" class="is-active">الرئيسية</a>
+            <a href="#">الملخص</a>
+            <a href="#">الأسئلة</a>
+            <a href="#">فلاش كارد</a>
+            <a href="#">خطة المذاكرة</a>
+            <a href="#">الإعدادات</a>
+          </nav>
+        </aside>
 
-        <div class="intro">
-          <p class="eyebrow">MVP للطلاب</p>
-          <h1 id="page-title">حوّل محاضراتك إلى ملخص وأسئلة خلال دقائق</h1>
-          <p>
-            ارفع ملف PDF أو ألصق نص المحاضرة، وخل Nawa AI يساعدك في التلخيص،
-            استخراج أهم النقاط، وتجهيز أسئلة للمراجعة.
-          </p>
-        </div>
-
-        <section class="tool-grid" aria-label="أداة توليد المراجعة">
-          <form class="generator-panel" id="generatorForm">
-            <div class="upload-zone" id="dropZone">
-              <input id="fileInput" type="file" accept="application/pdf" />
-              <div class="upload-icon" aria-hidden="true">
-                <span></span>
-              </div>
-              <div>
-                <label for="fileInput">ارفع ملف PDF</label>
-                <p id="fileStatus">أو اسحب الملف هنا. يمكن أيضاً استخدام نص المحاضرة بالأسفل.</p>
-              </div>
-            </div>
-
-            <label class="field-label" for="lectureText">نص المحاضرة</label>
-            <textarea
-              id="lectureText"
-              rows="8"
-              placeholder="ألصق نص المحاضرة هنا إذا لم تتم قراءة ملف PDF تلقائياً..."
-            ></textarea>
-
-            <fieldset class="output-options">
-              <legend>اختر نوع المخرجات</legend>
-              <label>
-                <input type="radio" name="outputType" value="summary" checked />
-                <span>ملخص</span>
-              </label>
-              <label>
-                <input type="radio" name="outputType" value="questions" />
-                <span>أسئلة</span>
-              </label>
-              <label>
-                <input type="radio" name="outputType" value="flashcards" />
-                <span>فلاش كارد</span>
-              </label>
-              <label>
-                <input type="radio" name="outputType" value="plan" />
-                <span>خطة مذاكرة</span>
-              </label>
-            </fieldset>
-
-            <div class="actions">
-              <button class="primary-button" type="submit" id="generateButton">ابدأ الآن</button>
-              <button class="ghost-button" type="button" id="clearButton">مسح</button>
-            </div>
-
-            <p class="privacy-note">
-              لا ترفع ملفات تحتوي على معلومات شخصية أو سرية. الصفحة مخصصة للمحاضرات والمحتوى التعليمي فقط.
+        <div class="dashboard-main">
+          <div class="intro">
+            <p class="eyebrow">MVP للطلاب</p>
+            <h1 id="page-title">حوّل محاضراتك إلى ملخص وأسئلة خلال دقائق</h1>
+            <p>
+              ارفع ملف PDF أو ألصق نص المحاضرة، وخل Nawa AI يساعدك في التلخيص،
+              استخراج أهم النقاط، وتجهيز أسئلة للمراجعة.
             </p>
-          </form>
+          </div>
 
-          <section class="result-panel" aria-live="polite">
-            <div class="result-header">
-              <div>
-                <p class="eyebrow">النتيجة</p>
-                <h2 id="resultTitle">جاهز للتوليد</h2>
+          <section class="tool-grid" aria-label="أداة توليد المراجعة">
+            <form class="generator-panel" id="generatorForm">
+              <div class="upload-zone" id="dropZone">
+                <input id="fileInput" type="file" accept="application/pdf" />
+                <div class="upload-icon" aria-hidden="true">
+                  <span></span>
+                </div>
+                <div>
+                  <label for="fileInput">اسحب ملف PDF هنا أو اضغط لاختيار ملف</label>
+                  <p id="fileStatus">سيتم استخراج النص تلقائياً ووضعه في مربع المحاضرة.</p>
+                </div>
               </div>
-              <div class="result-actions">
-                <button type="button" id="copyButton" disabled>نسخ</button>
-                <button type="button" id="downloadButton" disabled>تحميل TXT</button>
+
+              <label class="field-label" for="lectureText">نص المحاضرة</label>
+              <textarea
+                id="lectureText"
+                rows="8"
+                placeholder="ألصق نص المحاضرة هنا إذا لم تتم قراءة ملف PDF تلقائياً..."
+              ></textarea>
+
+              <fieldset class="output-options">
+                <legend>اختر نوع المخرجات</legend>
+                <label>
+                  <input type="radio" name="outputType" value="summary" checked />
+                  <span>
+                    <strong>الملخص</strong>
+                    <small>تلخيص المحاضرة في نقاط واضحة</small>
+                  </span>
+                </label>
+                <label>
+                  <input type="radio" name="outputType" value="questions" />
+                  <span>
+                    <strong>الأسئلة</strong>
+                    <small>إنشاء أسئلة متنوعة لاختبار فهمك</small>
+                  </span>
+                </label>
+                <label>
+                  <input type="radio" name="outputType" value="flashcards" />
+                  <span>
+                    <strong>فلاش كارد</strong>
+                    <small>مراجعة سريعة ببطاقات ذكية</small>
+                  </span>
+                </label>
+                <label>
+                  <input type="radio" name="outputType" value="plan" />
+                  <span>
+                    <strong>خطة المذاكرة</strong>
+                    <small>جدول زمني مخصص لمذاكرتك</small>
+                  </span>
+                </label>
+              </fieldset>
+
+              <div class="actions">
+                <button class="primary-button" type="submit" id="generateButton">ابدأ الآن</button>
+                <button class="ghost-button" type="button" id="clearButton">مسح</button>
               </div>
-            </div>
-            <pre id="resultOutput">ارفع ملفاً أو ألصق نص المحاضرة، اختر نوع المخرجات، ثم اضغط توليد.</pre>
+
+              <p class="privacy-note">
+                لا ترفع ملفات تحتوي على معلومات شخصية أو سرية. الصفحة مخصصة للمحاضرات والمحتوى التعليمي فقط.
+              </p>
+            </form>
+
+            <section class="result-panel" aria-live="polite">
+              <div class="result-header">
+                <div>
+                  <p class="eyebrow">النتيجة</p>
+                  <h2 id="resultTitle">جاهز للتوليد</h2>
+                </div>
+                <div class="result-actions">
+                  <button type="button" id="copyButton" disabled>نسخ</button>
+                  <button type="button" id="downloadButton" disabled>تحميل TXT</button>
+                </div>
+              </div>
+              <pre id="resultOutput">ارفع ملفاً أو ألصق نص المحاضرة، اختر نوع المخرجات، ثم اضغط توليد.</pre>
+            </section>
           </section>
-        </section>
+        </div>
       </section>
     </main>
 
