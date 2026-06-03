@@ -9,6 +9,7 @@
       content="حوّل ملفات المحاضرات إلى ملخصات، أسئلة متوقعة، وفلاش كارد للمذاكرة بسرعة."
     />
     <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   </head>
   <body>
     <main class="app-shell">
@@ -106,7 +107,7 @@
         <section class="tool-grid" aria-label="أداة توليد المراجعة">
           <form class="generator-panel" id="generatorForm">
             <div class="upload-zone" id="dropZone">
-              <input id="fileInput" type="file" accept=".pdf,.txt,text/plain,application/pdf" />
+              <input id="fileInput" type="file" accept="application/pdf" />
               <div class="upload-icon" aria-hidden="true">
                 <span></span>
               </div>
