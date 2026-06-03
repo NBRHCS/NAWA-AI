@@ -1,0 +1,412 @@
+:root {
+  --ink: #07192f;
+  --ink-soft: #163657;
+  --surface: #ffffff;
+  --surface-blue: #eefaff;
+  --cyan: #5ed7f8;
+  --cyan-strong: #12a7df;
+  --line: #cde9f5;
+  --muted: #5f7488;
+  --shadow: 0 24px 70px rgba(7, 25, 47, 0.14);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    linear-gradient(135deg, rgba(238, 250, 255, 0.92), rgba(255, 255, 255, 0.96)),
+    radial-gradient(circle at 15% 18%, rgba(94, 215, 248, 0.24), transparent 28%),
+    #f8fcff;
+  color: var(--ink);
+  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+}
+
+button,
+textarea,
+input {
+  font: inherit;
+}
+
+.app-shell {
+  min-height: 100vh;
+  padding: 28px;
+}
+
+.workspace {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+.brand-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 42px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.brand-mark {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  box-shadow: 0 14px 34px rgba(7, 25, 47, 0.18);
+}
+
+.brand strong,
+.brand small {
+  display: block;
+  line-height: 1.15;
+}
+
+.brand small,
+.tagline,
+.intro p,
+.privacy-note,
+.upload-zone p {
+  color: var(--muted);
+}
+
+.tagline {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.intro {
+  width: min(760px, 100%);
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--cyan-strong);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+h1,
+h2 {
+  margin: 0;
+  letter-spacing: 0;
+}
+
+h1 {
+  max-width: 780px;
+  font-size: clamp(2rem, 5vw, 4.6rem);
+  line-height: 1.08;
+}
+
+.intro p:not(.eyebrow) {
+  margin: 18px 0 0;
+  max-width: 680px;
+  font-size: 1.08rem;
+  line-height: 1.9;
+}
+
+.tool-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.9fr) minmax(360px, 1.1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.generator-panel,
+.result-panel {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow);
+}
+
+.generator-panel {
+  padding: 18px;
+}
+
+.upload-zone {
+  position: relative;
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  gap: 14px;
+  align-items: center;
+  min-height: 116px;
+  padding: 18px;
+  border: 1px dashed #83cfea;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #f6fdff, #eaf9ff);
+}
+
+.upload-zone.is-dragging {
+  border-color: var(--cyan-strong);
+  background: #e4f8ff;
+}
+
+.upload-zone input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.upload-zone label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 800;
+}
+
+.upload-zone p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.upload-icon {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--ink);
+}
+
+.upload-icon span {
+  width: 22px;
+  height: 28px;
+  border: 2px solid var(--cyan);
+  border-radius: 4px;
+  position: relative;
+}
+
+.upload-icon span::before,
+.upload-icon span::after {
+  content: "";
+  position: absolute;
+  background: var(--cyan);
+}
+
+.upload-icon span::before {
+  width: 10px;
+  height: 2px;
+  top: 8px;
+  right: 5px;
+}
+
+.upload-icon span::after {
+  width: 12px;
+  height: 2px;
+  top: 15px;
+  right: 4px;
+}
+
+.field-label {
+  display: block;
+  margin: 18px 0 8px;
+  font-weight: 800;
+}
+
+textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 170px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: #fbfeff;
+  line-height: 1.7;
+}
+
+textarea:focus,
+button:focus-visible {
+  outline: 3px solid rgba(94, 215, 248, 0.42);
+  outline-offset: 2px;
+}
+
+.output-options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 18px 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.output-options legend {
+  margin-bottom: 10px;
+  font-weight: 800;
+}
+
+.output-options label {
+  min-height: 42px;
+}
+
+.output-options input {
+  position: absolute;
+  opacity: 0;
+}
+
+.output-options span {
+  display: grid;
+  place-items: center;
+  min-height: 42px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f9fdff;
+  color: var(--ink-soft);
+  cursor: pointer;
+  font-weight: 700;
+  text-align: center;
+}
+
+.output-options input:checked + span {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
+
+.actions,
+.result-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.actions {
+  margin-top: 18px;
+}
+
+button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 8px;
+  padding: 0 18px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.primary-button {
+  flex: 1;
+  background: var(--ink);
+  color: #fff;
+}
+
+.ghost-button,
+.result-actions button {
+  border: 1px solid var(--line);
+  background: #f7fcff;
+  color: var(--ink);
+}
+
+.privacy-note {
+  margin: 16px 0 0;
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+.result-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 520px;
+  overflow: hidden;
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  padding: 18px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-blue);
+}
+
+.result-header h2 {
+  font-size: 1.18rem;
+}
+
+pre {
+  flex: 1;
+  margin: 0;
+  padding: 20px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--ink-soft);
+  line-height: 1.9;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+pre.is-error {
+  color: #8a1f1f;
+  background: #fff8f8;
+}
+
+@media (max-width: 900px) {
+  .app-shell {
+    padding: 18px;
+  }
+
+  .brand-bar,
+  .result-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .tool-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .output-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .app-shell {
+    padding: 12px;
+  }
+
+  .brand-bar {
+    margin-bottom: 28px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .upload-zone {
+    grid-template-columns: 1fr;
+  }
+
+  .output-options,
+  .actions,
+  .result-actions {
+    width: 100%;
+  }
+
+  .actions,
+  .result-actions {
+    flex-direction: column;
+  }
+
+  .actions button,
+  .result-actions button {
+    width: 100%;
+  }
+}

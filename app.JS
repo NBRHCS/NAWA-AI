@@ -1,0 +1,71 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="disc" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(512 498) rotate(90) scale(500)">
+      <stop offset="0" stop-color="#162437"/>
+      <stop offset="0.58" stop-color="#091422"/>
+      <stop offset="1" stop-color="#02060B"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="383" y1="277" x2="652" y2="567" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF8D9"/>
+      <stop offset="0.5" stop-color="#CDB67B"/>
+      <stop offset="1" stop-color="#FFF1C8"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="282" y1="210" x2="486" y2="592" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#A7D7F7"/>
+      <stop offset="1" stop-color="#4E83B0"/>
+    </linearGradient>
+    <linearGradient id="warm" x1="588" y1="288" x2="746" y2="628" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFE2AD"/>
+      <stop offset="1" stop-color="#B78D55"/>
+    </linearGradient>
+    <filter id="glow" x="235" y="155" width="570" height="540" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="9" result="blur"/>
+      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.52 0 0 0 0 0.75 0 0 0 0 0.95 0 0 0 0.55 0"/>
+      <feBlend in="SourceGraphic"/>
+    </filter>
+  </defs>
+
+  <rect width="1024" height="1024" fill="#000"/>
+  <circle cx="512" cy="512" r="495" fill="url(#disc)"/>
+
+  <g filter="url(#glow)" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M358 183C300 214 253 263 224 323" stroke="url(#blue)" stroke-width="5"/>
+    <path d="M321 246C271 308 247 387 255 466" stroke="url(#blue)" stroke-width="5"/>
+    <path d="M254 486C273 561 318 622 379 660" stroke="url(#blue)" stroke-width="5"/>
+    <path d="M420 654C363 642 313 608 281 558" stroke="url(#blue)" stroke-width="5"/>
+    <path d="M420 262C357 309 319 384 321 463" stroke="url(#blue)" stroke-width="5"/>
+    <path d="M441 308L403 347V403L374 432V507L423 543" stroke="url(#blue)" stroke-width="7"/>
+    <path d="M417 354L376 385V462L343 493" stroke="url(#blue)" stroke-width="7"/>
+    <circle cx="440" cy="252" r="11" stroke="url(#blue)" stroke-width="6"/>
+    <circle cx="420" cy="306" r="11" stroke="url(#blue)" stroke-width="6"/>
+    <circle cx="418" cy="374" r="11" stroke="url(#blue)" stroke-width="6"/>
+    <circle cx="421" cy="433" r="11" stroke="url(#blue)" stroke-width="6"/>
+    <circle cx="343" cy="494" r="11" stroke="url(#blue)" stroke-width="6"/>
+    <circle cx="374" cy="543" r="11" stroke="url(#blue)" stroke-width="6"/>
+    <circle cx="319" cy="568" r="6" stroke="url(#blue)" stroke-width="5"/>
+
+    <path d="M669 308C715 361 733 434 716 502" stroke="url(#warm)" stroke-width="5"/>
+    <path d="M703 280C760 351 783 447 761 537" stroke="url(#warm)" stroke-width="5" stroke-dasharray="2 14"/>
+    <path d="M722 510C704 571 663 621 610 651" stroke="url(#warm)" stroke-width="5"/>
+    <path d="M662 349L684 371V417L713 440V501" stroke="url(#warm)" stroke-width="7"/>
+    <circle cx="649" cy="333" r="6" fill="#FFE2AD"/>
+    <circle cx="667" cy="390" r="9" stroke="url(#warm)" stroke-width="6"/>
+    <circle cx="725" cy="457" r="8" stroke="url(#warm)" stroke-width="5"/>
+    <circle cx="601" cy="627" r="9" stroke="url(#warm)" stroke-width="6"/>
+    <circle cx="641" cy="660" r="8" stroke="url(#warm)" stroke-width="6"/>
+  </g>
+
+  <g>
+    <path d="M514 537C487 513 468 476 468 436C468 390 492 349 529 326C568 354 590 394 590 436C590 479 559 519 514 537Z" fill="url(#gold)"/>
+    <path d="M514 537C516 469 520 397 526 325" stroke="#FFF8D9" stroke-width="8" stroke-linecap="round"/>
+    <path d="M527 332C537 251 514 204 478 180C468 236 488 291 527 332Z" fill="url(#gold)"/>
+    <path d="M533 333C587 247 644 206 724 201C694 281 620 332 533 333Z" fill="url(#gold)"/>
+    <path d="M519 210C540 252 542 295 528 333" stroke="#FFF8D9" stroke-width="6" stroke-linecap="round"/>
+    <path d="M537 326C588 286 640 247 704 215" stroke="#FFF8D9" stroke-width="5" stroke-linecap="round" opacity="0.65"/>
+  </g>
+
+  <text x="512" y="750" text-anchor="middle" direction="rtl" unicode-bidi="plaintext" fill="#FFF1D4" font-family="Tahoma, Arial, sans-serif" font-size="150" font-weight="800">نواة</text>
+  <path d="M306 790H487M537 790H718" stroke="#FFF1D4" stroke-width="3" opacity="0.85"/>
+  <text x="512" y="852" text-anchor="middle" direction="rtl" unicode-bidi="plaintext" fill="#FFF1D4" font-family="Tahoma, Arial, sans-serif" font-size="34" letter-spacing="2">ذكاء اصطناعي  •  بيانات  •  برمجة  •  تطوير</text>
+  <text x="512" y="914" text-anchor="middle" fill="#F8E8C5" font-family="Arial, sans-serif" font-size="32" letter-spacing="14">LEARN  •  BUILD  •  IMPROVE</text>
+</svg>
