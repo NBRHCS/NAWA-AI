@@ -1,71 +1,414 @@
-<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <radialGradient id="disc" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(512 498) rotate(90) scale(500)">
-      <stop offset="0" stop-color="#162437"/>
-      <stop offset="0.58" stop-color="#091422"/>
-      <stop offset="1" stop-color="#02060B"/>
-    </radialGradient>
-    <linearGradient id="gold" x1="383" y1="277" x2="652" y2="567" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FFF8D9"/>
-      <stop offset="0.5" stop-color="#CDB67B"/>
-      <stop offset="1" stop-color="#FFF1C8"/>
-    </linearGradient>
-    <linearGradient id="blue" x1="282" y1="210" x2="486" y2="592" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#A7D7F7"/>
-      <stop offset="1" stop-color="#4E83B0"/>
-    </linearGradient>
-    <linearGradient id="warm" x1="588" y1="288" x2="746" y2="628" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#FFE2AD"/>
-      <stop offset="1" stop-color="#B78D55"/>
-    </linearGradient>
-    <filter id="glow" x="235" y="155" width="570" height="540" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-      <feGaussianBlur stdDeviation="9" result="blur"/>
-      <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.52 0 0 0 0 0.75 0 0 0 0 0.95 0 0 0 0.55 0"/>
-      <feBlend in="SourceGraphic"/>
-    </filter>
-  </defs>
+:root {
+  --ink: #07192f;
+  --ink-soft: #163657;
+  --surface: #ffffff;
+  --surface-blue: #eefaff;
+  --cyan: #5ed7f8;
+  --cyan-strong: #12a7df;
+  --line: #cde9f5;
+  --muted: #5f7488;
+  --shadow: 0 24px 70px rgba(7, 25, 47, 0.14);
+}
 
-  <rect width="1024" height="1024" fill="#000"/>
-  <circle cx="512" cy="512" r="495" fill="url(#disc)"/>
+* {
+  box-sizing: border-box;
+}
 
-  <g filter="url(#glow)" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M358 183C300 214 253 263 224 323" stroke="url(#blue)" stroke-width="5"/>
-    <path d="M321 246C271 308 247 387 255 466" stroke="url(#blue)" stroke-width="5"/>
-    <path d="M254 486C273 561 318 622 379 660" stroke="url(#blue)" stroke-width="5"/>
-    <path d="M420 654C363 642 313 608 281 558" stroke="url(#blue)" stroke-width="5"/>
-    <path d="M420 262C357 309 319 384 321 463" stroke="url(#blue)" stroke-width="5"/>
-    <path d="M441 308L403 347V403L374 432V507L423 543" stroke="url(#blue)" stroke-width="7"/>
-    <path d="M417 354L376 385V462L343 493" stroke="url(#blue)" stroke-width="7"/>
-    <circle cx="440" cy="252" r="11" stroke="url(#blue)" stroke-width="6"/>
-    <circle cx="420" cy="306" r="11" stroke="url(#blue)" stroke-width="6"/>
-    <circle cx="418" cy="374" r="11" stroke="url(#blue)" stroke-width="6"/>
-    <circle cx="421" cy="433" r="11" stroke="url(#blue)" stroke-width="6"/>
-    <circle cx="343" cy="494" r="11" stroke="url(#blue)" stroke-width="6"/>
-    <circle cx="374" cy="543" r="11" stroke="url(#blue)" stroke-width="6"/>
-    <circle cx="319" cy="568" r="6" stroke="url(#blue)" stroke-width="5"/>
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    linear-gradient(135deg, rgba(238, 250, 255, 0.92), rgba(255, 255, 255, 0.96)),
+    radial-gradient(circle at 15% 18%, rgba(94, 215, 248, 0.24), transparent 28%),
+    #f8fcff;
+  color: var(--ink);
+  font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+}
 
-    <path d="M669 308C715 361 733 434 716 502" stroke="url(#warm)" stroke-width="5"/>
-    <path d="M703 280C760 351 783 447 761 537" stroke="url(#warm)" stroke-width="5" stroke-dasharray="2 14"/>
-    <path d="M722 510C704 571 663 621 610 651" stroke="url(#warm)" stroke-width="5"/>
-    <path d="M662 349L684 371V417L713 440V501" stroke="url(#warm)" stroke-width="7"/>
-    <circle cx="649" cy="333" r="6" fill="#FFE2AD"/>
-    <circle cx="667" cy="390" r="9" stroke="url(#warm)" stroke-width="6"/>
-    <circle cx="725" cy="457" r="8" stroke="url(#warm)" stroke-width="5"/>
-    <circle cx="601" cy="627" r="9" stroke="url(#warm)" stroke-width="6"/>
-    <circle cx="641" cy="660" r="8" stroke="url(#warm)" stroke-width="6"/>
-  </g>
+button,
+textarea,
+input {
+  font: inherit;
+}
 
-  <g>
-    <path d="M514 537C487 513 468 476 468 436C468 390 492 349 529 326C568 354 590 394 590 436C590 479 559 519 514 537Z" fill="url(#gold)"/>
-    <path d="M514 537C516 469 520 397 526 325" stroke="#FFF8D9" stroke-width="8" stroke-linecap="round"/>
-    <path d="M527 332C537 251 514 204 478 180C468 236 488 291 527 332Z" fill="url(#gold)"/>
-    <path d="M533 333C587 247 644 206 724 201C694 281 620 332 533 333Z" fill="url(#gold)"/>
-    <path d="M519 210C540 252 542 295 528 333" stroke="#FFF8D9" stroke-width="6" stroke-linecap="round"/>
-    <path d="M537 326C588 286 640 247 704 215" stroke="#FFF8D9" stroke-width="5" stroke-linecap="round" opacity="0.65"/>
-  </g>
+.app-shell {
+  min-height: 100vh;
+  padding: 28px;
+}
 
-  <text x="512" y="750" text-anchor="middle" direction="rtl" unicode-bidi="plaintext" fill="#FFF1D4" font-family="Tahoma, Arial, sans-serif" font-size="150" font-weight="800">نواة</text>
-  <path d="M306 790H487M537 790H718" stroke="#FFF1D4" stroke-width="3" opacity="0.85"/>
-  <text x="512" y="852" text-anchor="middle" direction="rtl" unicode-bidi="plaintext" fill="#FFF1D4" font-family="Tahoma, Arial, sans-serif" font-size="34" letter-spacing="2">ذكاء اصطناعي  •  بيانات  •  برمجة  •  تطوير</text>
-  <text x="512" y="914" text-anchor="middle" fill="#F8E8C5" font-family="Arial, sans-serif" font-size="32" letter-spacing="14">LEARN  •  BUILD  •  IMPROVE</text>
-</svg>
+.workspace {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+.brand-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 42px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: block;
+  flex: 0 0 auto;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  box-shadow: 0 14px 34px rgba(7, 25, 47, 0.18);
+}
+
+.brand strong,
+.brand small {
+  display: block;
+  line-height: 1.15;
+}
+
+.brand small,
+.tagline,
+.intro p,
+.privacy-note,
+.upload-zone p {
+  color: var(--muted);
+}
+
+.tagline {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.intro {
+  width: min(760px, 100%);
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  color: var(--cyan-strong);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+h1,
+h2 {
+  margin: 0;
+  letter-spacing: 0;
+}
+
+h1 {
+  max-width: 780px;
+  font-size: clamp(2rem, 5vw, 4.6rem);
+  line-height: 1.08;
+}
+
+.intro p:not(.eyebrow) {
+  margin: 18px 0 0;
+  max-width: 680px;
+  font-size: 1.08rem;
+  line-height: 1.9;
+}
+
+.tool-grid {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.9fr) minmax(360px, 1.1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.generator-panel,
+.result-panel {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow);
+}
+
+.generator-panel {
+  padding: 18px;
+}
+
+.upload-zone {
+  position: relative;
+  display: grid;
+  grid-template-columns: 54px 1fr;
+  gap: 14px;
+  align-items: center;
+  min-height: 116px;
+  padding: 18px;
+  border: 1px dashed #83cfea;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #f6fdff, #eaf9ff);
+}
+
+.upload-zone.is-dragging {
+  border-color: var(--cyan-strong);
+  background: #e4f8ff;
+}
+
+.upload-zone input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.upload-zone label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 800;
+}
+
+.upload-zone p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.upload-icon {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: var(--ink);
+}
+
+.upload-icon span {
+  width: 22px;
+  height: 28px;
+  border: 2px solid var(--cyan);
+  border-radius: 4px;
+  position: relative;
+}
+
+.upload-icon span::before,
+.upload-icon span::after {
+  content: "";
+  position: absolute;
+  background: var(--cyan);
+}
+
+.upload-icon span::before {
+  width: 10px;
+  height: 2px;
+  top: 8px;
+  right: 5px;
+}
+
+.upload-icon span::after {
+  width: 12px;
+  height: 2px;
+  top: 15px;
+  right: 4px;
+}
+
+.field-label {
+  display: block;
+  margin: 18px 0 8px;
+  font-weight: 800;
+}
+
+textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 170px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  background: #fbfeff;
+  line-height: 1.7;
+}
+
+textarea:focus,
+button:focus-visible {
+  outline: 3px solid rgba(94, 215, 248, 0.42);
+  outline-offset: 2px;
+}
+
+.output-options {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin: 18px 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.output-options legend {
+  margin-bottom: 10px;
+  font-weight: 800;
+}
+
+.output-options label {
+  min-height: 42px;
+}
+
+.output-options input {
+  position: absolute;
+  opacity: 0;
+}
+
+.output-options span {
+  display: grid;
+  place-items: center;
+  min-height: 42px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #f9fdff;
+  color: var(--ink-soft);
+  cursor: pointer;
+  font-weight: 700;
+  text-align: center;
+}
+
+.output-options input:checked + span {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fff;
+}
+
+.actions,
+.result-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.actions {
+  margin-top: 18px;
+}
+
+button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 8px;
+  padding: 0 18px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.primary-button {
+  flex: 1;
+  background: var(--ink);
+  color: #fff;
+}
+
+.ghost-button,
+.result-actions button {
+  border: 1px solid var(--line);
+  background: #f7fcff;
+  color: var(--ink);
+}
+
+.privacy-note {
+  margin: 16px 0 0;
+  font-size: 0.88rem;
+  line-height: 1.7;
+}
+
+.result-panel {
+  display: flex;
+  flex-direction: column;
+  min-height: 520px;
+  overflow: hidden;
+}
+
+.result-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  padding: 18px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-blue);
+}
+
+.result-header h2 {
+  font-size: 1.18rem;
+}
+
+pre {
+  flex: 1;
+  margin: 0;
+  padding: 20px;
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--ink-soft);
+  line-height: 1.9;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+pre.is-error {
+  color: #8a1f1f;
+  background: #fff8f8;
+}
+
+@media (max-width: 900px) {
+  .app-shell {
+    padding: 18px;
+  }
+
+  .brand-bar,
+  .result-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .tool-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .output-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .app-shell {
+    padding: 12px;
+  }
+
+  .brand-bar {
+    margin-bottom: 28px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .upload-zone {
+    grid-template-columns: 1fr;
+  }
+
+  .output-options,
+  .actions,
+  .result-actions {
+    width: 100%;
+  }
+
+  .actions,
+  .result-actions {
+    flex-direction: column;
+  }
+
+  .actions button,
+  .result-actions button {
+    width: 100%;
+  }
+}
