@@ -1,8 +1,6 @@
 :root {
   --bg: #030712;
-  --bg-soft: #07111f;
   --panel: rgba(8, 20, 35, 0.78);
-  --panel-strong: rgba(9, 25, 43, 0.92);
   --glass: rgba(255, 255, 255, 0.06);
   --glass-strong: rgba(255, 255, 255, 0.1);
   --line: rgba(125, 232, 255, 0.18);
@@ -54,9 +52,7 @@ input {
   padding: 18px;
   border: 1px solid var(--line);
   border-radius: 28px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)),
-    rgba(3, 8, 18, 0.78);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03)), rgba(3, 8, 18, 0.78);
   box-shadow: var(--shadow), var(--glow);
   backdrop-filter: blur(22px);
 }
@@ -100,10 +96,6 @@ input {
 .brand small {
   display: block;
   line-height: 1.15;
-}
-
-.brand strong {
-  font-size: 1rem;
 }
 
 .brand small,
@@ -209,16 +201,11 @@ h1 {
   padding: 20px;
   border: 1px dashed var(--line-strong);
   border-radius: 20px;
-  background:
-    radial-gradient(circle at 18% 22%, rgba(94, 215, 248, 0.18), transparent 30%),
-    linear-gradient(135deg, rgba(94, 215, 248, 0.1), rgba(255, 255, 255, 0.035));
+  background: radial-gradient(circle at 18% 22%, rgba(94, 215, 248, 0.18), transparent 30%), linear-gradient(135deg, rgba(94, 215, 248, 0.1), rgba(255, 255, 255, 0.035));
 }
 
 .upload-zone.is-dragging {
   border-color: var(--teal);
-  background:
-    radial-gradient(circle at 18% 22%, rgba(32, 230, 201, 0.28), transparent 34%),
-    linear-gradient(135deg, rgba(94, 215, 248, 0.18), rgba(32, 230, 201, 0.08));
 }
 
 .upload-zone input {
@@ -249,7 +236,6 @@ h1 {
   border: 1px solid rgba(94, 215, 248, 0.3);
   border-radius: 18px;
   background: rgba(94, 215, 248, 0.12);
-  box-shadow: 0 0 28px rgba(94, 215, 248, 0.12);
 }
 
 .upload-icon span {
@@ -264,21 +250,19 @@ h1 {
 .upload-icon span::after {
   content: "";
   position: absolute;
+  right: 4px;
+  height: 2px;
   background: var(--cyan);
 }
 
 .upload-icon span::before {
   width: 11px;
-  height: 2px;
   top: 9px;
-  right: 5px;
 }
 
 .upload-icon span::after {
   width: 13px;
-  height: 2px;
   top: 16px;
-  right: 4px;
 }
 
 .field-label {
@@ -298,6 +282,7 @@ textarea {
   color: var(--text);
   background: rgba(3, 8, 18, 0.56);
   line-height: 1.8;
+  unicode-bidi: plaintext;
 }
 
 textarea::placeholder {
@@ -319,7 +304,8 @@ button:focus-visible {
   border: 0;
 }
 
-.output-options legend {
+.output-options legend,
+.language-options legend {
   margin-bottom: 10px;
   color: var(--text);
   font-weight: 900;
@@ -329,7 +315,8 @@ button:focus-visible {
   min-height: 120px;
 }
 
-.output-options input {
+.output-options input,
+.language-options input {
   position: absolute;
   opacity: 0;
 }
@@ -353,7 +340,6 @@ button:focus-visible {
 
 .output-options strong {
   display: block;
-  font-size: 1rem;
 }
 
 .output-options small {
@@ -366,9 +352,44 @@ button:focus-visible {
 .output-options input:checked + span {
   transform: translateY(-2px);
   border-color: var(--line-strong);
-  background:
-    linear-gradient(135deg, rgba(94, 215, 248, 0.18), rgba(32, 230, 201, 0.07)),
-    var(--glass-strong);
+  background: linear-gradient(135deg, rgba(94, 215, 248, 0.18), rgba(32, 230, 201, 0.07)), var(--glass-strong);
+}
+
+.language-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 18px 0 0;
+  padding: 0;
+  border: 0;
+}
+
+.language-options label {
+  flex: 1 1 96px;
+}
+
+.language-options span {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-soft);
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.language-options input:checked + span {
+  border-color: var(--line-strong);
+  background: rgba(94, 215, 248, 0.14);
+  color: var(--text);
+}
+
+.language-options.is-highlighted span {
+  border-color: var(--teal);
+  box-shadow: 0 0 26px rgba(32, 230, 201, 0.22);
 }
 
 .actions,
@@ -400,7 +421,6 @@ button:disabled {
   flex: 1;
   background: linear-gradient(135deg, var(--cyan), var(--teal));
   color: #021019;
-  box-shadow: 0 14px 34px rgba(32, 230, 201, 0.16);
 }
 
 .ghost-button,
@@ -447,9 +467,9 @@ pre {
   line-height: 1.95;
   font-family: inherit;
   font-size: 0.98rem;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent),
-    rgba(3, 8, 18, 0.18);
+  background: rgba(3, 8, 18, 0.18);
+  text-align: start;
+  unicode-bidi: plaintext;
 }
 
 pre.is-error {
@@ -515,10 +535,7 @@ pre.is-error {
     font-size: 2rem;
   }
 
-  .upload-zone {
-    grid-template-columns: 1fr;
-  }
-
+  .upload-zone,
   .output-options {
     grid-template-columns: 1fr;
   }
@@ -539,4 +556,3 @@ pre.is-error {
     flex-direction: column;
   }
 }
-
