@@ -4,10 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Nawa AI | نواة AI</title>
-    <meta
-      name="description"
-      content="حوّل ملفات المحاضرات إلى ملخصات، أسئلة متوقعة، وفلاش كارد للمذاكرة بسرعة."
-    />
+    <meta name="description" content="حوّل ملفات المحاضرات إلى ملخصات، أسئلة متوقعة، وفلاش كارد للمذاكرة بسرعة." />
     <link rel="stylesheet" href="styles.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   </head>
@@ -16,76 +13,50 @@
       <section class="dashboard-panel" aria-labelledby="page-title">
         <aside class="sidebar" aria-label="التنقل الرئيسي">
           <a class="brand" href="#" aria-label="Nawa AI">
-            <svg class="brand-mark" aria-hidden="true" focusable="false" width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="brand-mark" aria-hidden="true" focusable="false" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
               <defs>
                 <radialGradient id="disc" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(512 498) rotate(90) scale(500)">
-                  <stop offset="0" stop-color="#162437"/>
-                  <stop offset="0.58" stop-color="#091422"/>
-                  <stop offset="1" stop-color="#02060B"/>
+                  <stop offset="0" stop-color="#162437" />
+                  <stop offset="0.58" stop-color="#091422" />
+                  <stop offset="1" stop-color="#02060B" />
                 </radialGradient>
                 <linearGradient id="gold" x1="383" y1="277" x2="652" y2="567" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#FFF8D9"/>
-                  <stop offset="0.5" stop-color="#CDB67B"/>
-                  <stop offset="1" stop-color="#FFF1C8"/>
+                  <stop stop-color="#FFF8D9" />
+                  <stop offset="0.5" stop-color="#CDB67B" />
+                  <stop offset="1" stop-color="#FFF1C8" />
                 </linearGradient>
                 <linearGradient id="blue" x1="282" y1="210" x2="486" y2="592" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#A7D7F7"/>
-                  <stop offset="1" stop-color="#4E83B0"/>
+                  <stop stop-color="#A7D7F7" />
+                  <stop offset="1" stop-color="#4E83B0" />
                 </linearGradient>
                 <linearGradient id="warm" x1="588" y1="288" x2="746" y2="628" gradientUnits="userSpaceOnUse">
-                  <stop stop-color="#FFE2AD"/>
-                  <stop offset="1" stop-color="#B78D55"/>
+                  <stop stop-color="#FFE2AD" />
+                  <stop offset="1" stop-color="#B78D55" />
                 </linearGradient>
-                <filter id="glow" x="235" y="155" width="570" height="540" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                  <feGaussianBlur stdDeviation="9" result="blur"/>
-                  <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0.52 0 0 0 0 0.75 0 0 0 0 0.95 0 0 0 0.55 0"/>
-                  <feBlend in="SourceGraphic"/>
-                </filter>
               </defs>
-
-              <rect width="1024" height="1024" fill="#000"/>
-              <circle cx="512" cy="512" r="495" fill="url(#disc)"/>
-
-              <g filter="url(#glow)" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M358 183C300 214 253 263 224 323" stroke="url(#blue)" stroke-width="5"/>
-                <path d="M321 246C271 308 247 387 255 466" stroke="url(#blue)" stroke-width="5"/>
-                <path d="M254 486C273 561 318 622 379 660" stroke="url(#blue)" stroke-width="5"/>
-                <path d="M420 654C363 642 313 608 281 558" stroke="url(#blue)" stroke-width="5"/>
-                <path d="M420 262C357 309 319 384 321 463" stroke="url(#blue)" stroke-width="5"/>
-                <path d="M441 308L403 347V403L374 432V507L423 543" stroke="url(#blue)" stroke-width="7"/>
-                <path d="M417 354L376 385V462L343 493" stroke="url(#blue)" stroke-width="7"/>
-                <circle cx="440" cy="252" r="11" stroke="url(#blue)" stroke-width="6"/>
-                <circle cx="420" cy="306" r="11" stroke="url(#blue)" stroke-width="6"/>
-                <circle cx="418" cy="374" r="11" stroke="url(#blue)" stroke-width="6"/>
-                <circle cx="421" cy="433" r="11" stroke="url(#blue)" stroke-width="6"/>
-                <circle cx="343" cy="494" r="11" stroke="url(#blue)" stroke-width="6"/>
-                <circle cx="374" cy="543" r="11" stroke="url(#blue)" stroke-width="6"/>
-                <circle cx="319" cy="568" r="6" stroke="url(#blue)" stroke-width="5"/>
-
-                <path d="M669 308C715 361 733 434 716 502" stroke="url(#warm)" stroke-width="5"/>
-                <path d="M703 280C760 351 783 447 761 537" stroke="url(#warm)" stroke-width="5" stroke-dasharray="2 14"/>
-                <path d="M722 510C704 571 663 621 610 651" stroke="url(#warm)" stroke-width="5"/>
-                <path d="M662 349L684 371V417L713 440V501" stroke="url(#warm)" stroke-width="7"/>
-                <circle cx="649" cy="333" r="6" fill="#FFE2AD"/>
-                <circle cx="667" cy="390" r="9" stroke="url(#warm)" stroke-width="6"/>
-                <circle cx="725" cy="457" r="8" stroke="url(#warm)" stroke-width="5"/>
-                <circle cx="601" cy="627" r="9" stroke="url(#warm)" stroke-width="6"/>
-                <circle cx="641" cy="660" r="8" stroke="url(#warm)" stroke-width="6"/>
+              <rect width="1024" height="1024" fill="#000" />
+              <circle cx="512" cy="512" r="495" fill="url(#disc)" />
+              <g stroke-linecap="round" stroke-linejoin="round">
+                <path d="M358 183C300 214 253 263 224 323" stroke="url(#blue)" stroke-width="5" />
+                <path d="M321 246C271 308 247 387 255 466" stroke="url(#blue)" stroke-width="5" />
+                <path d="M254 486C273 561 318 622 379 660" stroke="url(#blue)" stroke-width="5" />
+                <path d="M441 308L403 347V403L374 432V507L423 543" stroke="url(#blue)" stroke-width="7" />
+                <circle cx="440" cy="252" r="11" stroke="url(#blue)" stroke-width="6" />
+                <circle cx="420" cy="306" r="11" stroke="url(#blue)" stroke-width="6" />
+                <circle cx="418" cy="374" r="11" stroke="url(#blue)" stroke-width="6" />
+                <circle cx="421" cy="433" r="11" stroke="url(#blue)" stroke-width="6" />
+                <path d="M669 308C715 361 733 434 716 502" stroke="url(#warm)" stroke-width="5" />
+                <path d="M703 280C760 351 783 447 761 537" stroke="url(#warm)" stroke-width="5" stroke-dasharray="2 14" />
+                <path d="M722 510C704 571 663 621 610 651" stroke="url(#warm)" stroke-width="5" />
+                <circle cx="667" cy="390" r="9" stroke="url(#warm)" stroke-width="6" />
+                <circle cx="641" cy="660" r="8" stroke="url(#warm)" stroke-width="6" />
               </g>
-
-              <g>
-                <path d="M514 537C487 513 468 476 468 436C468 390 492 349 529 326C568 354 590 394 590 436C590 479 559 519 514 537Z" fill="url(#gold)"/>
-                <path d="M514 537C516 469 520 397 526 325" stroke="#FFF8D9" stroke-width="8" stroke-linecap="round"/>
-                <path d="M527 332C537 251 514 204 478 180C468 236 488 291 527 332Z" fill="url(#gold)"/>
-                <path d="M533 333C587 247 644 206 724 201C694 281 620 332 533 333Z" fill="url(#gold)"/>
-                <path d="M519 210C540 252 542 295 528 333" stroke="#FFF8D9" stroke-width="6" stroke-linecap="round"/>
-                <path d="M537 326C588 286 640 247 704 215" stroke="#FFF8D9" stroke-width="5" stroke-linecap="round" opacity="0.65"/>
-              </g>
-
+              <path d="M514 537C487 513 468 476 468 436C468 390 492 349 529 326C568 354 590 394 590 436C590 479 559 519 514 537Z" fill="url(#gold)" />
+              <path d="M514 537C516 469 520 397 526 325" stroke="#FFF8D9" stroke-width="8" stroke-linecap="round" />
+              <path d="M527 332C537 251 514 204 478 180C468 236 488 291 527 332Z" fill="url(#gold)" />
+              <path d="M533 333C587 247 644 206 724 201C694 281 620 332 533 333Z" fill="url(#gold)" />
               <text x="512" y="750" text-anchor="middle" direction="rtl" unicode-bidi="plaintext" fill="#FFF1D4" font-family="Tahoma, Arial, sans-serif" font-size="150" font-weight="800">نواة</text>
-              <path d="M306 790H487M537 790H718" stroke="#FFF1D4" stroke-width="3" opacity="0.85"/>
-              <text x="512" y="852" text-anchor="middle" direction="rtl" unicode-bidi="plaintext" fill="#FFF1D4" font-family="Tahoma, Arial, sans-serif" font-size="34" letter-spacing="2">ذكاء اصطناعي  •  بيانات  •  برمجة  •  تطوير</text>
-              <text x="512" y="914" text-anchor="middle" fill="#F8E8C5" font-family="Arial, sans-serif" font-size="32" letter-spacing="14">LEARN  •  BUILD  •  IMPROVE</text>
+              <path d="M306 790H487M537 790H718" stroke="#FFF1D4" stroke-width="3" opacity="0.85" />
             </svg>
             <span>
               <strong>Nawa AI</strong>
@@ -94,12 +65,12 @@
           </a>
           <p class="tagline">من ملف طويل إلى مراجعة جاهزة.</p>
           <nav class="sidebar-nav">
-            <a href="#" class="is-active">الرئيسية</a>
-            <a href="#">الملخص</a>
-            <a href="#">الأسئلة</a>
-            <a href="#">فلاش كارد</a>
-            <a href="#">خطة المذاكرة</a>
-            <a href="#">الإعدادات</a>
+            <a href="#upload" class="is-active" data-nav-target="home">الرئيسية</a>
+            <a href="#summary" data-nav-target="summary">الملخص</a>
+            <a href="#questions" data-nav-target="questions">الأسئلة</a>
+            <a href="#flashcards" data-nav-target="flashcards">فلاش كارد</a>
+            <a href="#plan" data-nav-target="plan">خطة المذاكرة</a>
+            <a href="#settings" data-nav-target="settings">الإعدادات</a>
           </nav>
         </aside>
 
@@ -107,19 +78,14 @@
           <div class="intro">
             <p class="eyebrow">MVP للطلاب</p>
             <h1 id="page-title">حوّل محاضراتك إلى ملخص وأسئلة خلال دقائق</h1>
-            <p>
-              ارفع ملف PDF أو ألصق نص المحاضرة، وخل Nawa AI يساعدك في التلخيص،
-              استخراج أهم النقاط، وتجهيز أسئلة للمراجعة.
-            </p>
+            <p>ارفع ملف PDF أو ألصق نص المحاضرة، وخل Nawa AI يساعدك في التلخيص، استخراج أهم النقاط، وتجهيز أسئلة للمراجعة.</p>
           </div>
 
           <section class="tool-grid" aria-label="أداة توليد المراجعة">
             <form class="generator-panel" id="generatorForm">
               <div class="upload-zone" id="dropZone">
                 <input id="fileInput" type="file" accept="application/pdf" />
-                <div class="upload-icon" aria-hidden="true">
-                  <span></span>
-                </div>
+                <div class="upload-icon" aria-hidden="true"><span></span></div>
                 <div>
                   <label for="fileInput">اسحب ملف PDF هنا أو اضغط لاختيار ملف</label>
                   <p id="fileStatus">سيتم استخراج النص تلقائياً ووضعه في مربع المحاضرة.</p>
@@ -127,42 +93,33 @@
               </div>
 
               <label class="field-label" for="lectureText">نص المحاضرة</label>
-              <textarea
-                id="lectureText"
-                rows="8"
-                placeholder="ألصق نص المحاضرة هنا إذا لم تتم قراءة ملف PDF تلقائياً..."
-              ></textarea>
+              <textarea id="lectureText" rows="8" dir="auto" placeholder="ألصق نص المحاضرة هنا إذا لم تتم قراءة ملف PDF تلقائياً..."></textarea>
 
-              <fieldset class="output-options">
+              <fieldset class="output-options" id="outputOptions">
                 <legend>اختر نوع المخرجات</legend>
                 <label>
                   <input type="radio" name="outputType" value="summary" checked />
-                  <span>
-                    <strong>الملخص</strong>
-                    <small>تلخيص المحاضرة في نقاط واضحة</small>
-                  </span>
+                  <span><strong>الملخص</strong><small>تلخيص المحاضرة في نقاط واضحة</small></span>
                 </label>
                 <label>
                   <input type="radio" name="outputType" value="questions" />
-                  <span>
-                    <strong>الأسئلة</strong>
-                    <small>إنشاء أسئلة متنوعة لاختبار فهمك</small>
-                  </span>
+                  <span><strong>الأسئلة</strong><small>إنشاء أسئلة متنوعة لاختبار فهمك</small></span>
                 </label>
                 <label>
                   <input type="radio" name="outputType" value="flashcards" />
-                  <span>
-                    <strong>فلاش كارد</strong>
-                    <small>مراجعة سريعة ببطاقات ذكية</small>
-                  </span>
+                  <span><strong>فلاش كارد</strong><small>مراجعة سريعة ببطاقات ذكية</small></span>
                 </label>
                 <label>
                   <input type="radio" name="outputType" value="plan" />
-                  <span>
-                    <strong>خطة المذاكرة</strong>
-                    <small>جدول زمني مخصص لمذاكرتك</small>
-                  </span>
+                  <span><strong>خطة المذاكرة</strong><small>جدول زمني مخصص لمذاكرتك</small></span>
                 </label>
+              </fieldset>
+
+              <fieldset class="language-options" id="languageOptions" aria-label="لغة النتيجة">
+                <legend>لغة النتيجة</legend>
+                <label><input type="radio" name="outputLanguage" value="auto" checked /><span>تلقائي</span></label>
+                <label><input type="radio" name="outputLanguage" value="ar" /><span>عربي</span></label>
+                <label><input type="radio" name="outputLanguage" value="en" /><span>English</span></label>
               </fieldset>
 
               <div class="actions">
@@ -170,9 +127,7 @@
                 <button class="ghost-button" type="button" id="clearButton">مسح</button>
               </div>
 
-              <p class="privacy-note">
-                لا ترفع ملفات تحتوي على معلومات شخصية أو سرية. الصفحة مخصصة للمحاضرات والمحتوى التعليمي فقط.
-              </p>
+              <p class="privacy-note">لا ترفع ملفات تحتوي على معلومات شخصية أو سرية. الصفحة مخصصة للمحاضرات والمحتوى التعليمي فقط.</p>
             </form>
 
             <section class="result-panel" aria-live="polite">
@@ -186,7 +141,7 @@
                   <button type="button" id="downloadButton" disabled>تحميل TXT</button>
                 </div>
               </div>
-              <pre id="resultOutput">ارفع ملفاً أو ألصق نص المحاضرة، اختر نوع المخرجات، ثم اضغط توليد.</pre>
+              <pre id="resultOutput" dir="auto">ارفع ملفاً أو ألصق نص المحاضرة، اختر نوع المخرجات، ثم اضغط توليد.</pre>
             </section>
           </section>
         </div>
